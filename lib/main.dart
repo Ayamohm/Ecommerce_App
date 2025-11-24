@@ -1,4 +1,5 @@
 import 'package:commerce_app/core/styles/app_theme.dart';
+import 'package:commerce_app/core/utils/service_locators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'core/networking/dio_helper.dart';
@@ -6,7 +7,7 @@ import 'core/routing/routing_generation.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  await Helper.initDio();
+  setup();
   runApp(const MyApp());
 }
 

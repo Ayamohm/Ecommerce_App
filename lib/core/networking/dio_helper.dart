@@ -6,19 +6,20 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'dio_endpoints.dart';
 
 class Helper {
-  static Dio? dio;
-  static initDio() {
-    dio ??= Dio(
-      BaseOptions(
-        baseUrl: ApiEndpints.BaseUrl,
-        receiveDataWhenStatusError: true,
-        validateStatus: (status) => true,
-      ),
-    );
-    dio!.interceptors.add(PrettyDioLogger());
-  }
+   Dio? dio;
+   Helper(){
+   dio ??= Dio(
+   BaseOptions(
+   baseUrl: ApiEndpints.BaseUrl,
+   receiveDataWhenStatusError: true,
+   validateStatus: (status) => true,
+   ),
+   );
+   dio!.interceptors.add(PrettyDioLogger());
+}
 
-  static Future<Response> postRequest({
+
+Future<Response> postRequest({
     required String endpint,
     required Map<String, dynamic> data,
   }) async {

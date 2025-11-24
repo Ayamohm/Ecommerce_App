@@ -7,11 +7,15 @@ import 'package:dartz/dartz.dart';
 import '../../../core/networking/dio_endpoints.dart';
 
 class Authrepo {
+
+  final Helper helper;
+  Authrepo(this.helper);
+
   Future<Either<String, LoginResponseModel>> login({
     required String username,
     required String password,
   }) async {
-    final response = await Helper.postRequest(
+    final response = await helper.postRequest(
       endpint: ApiEndpints.LoginUrl,
       data: {
         "username": username,
