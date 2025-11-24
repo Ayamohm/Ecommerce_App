@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/styles/app_styles.dart';
+import '../../core/utils/service_locators.dart';
+import '../../core/utils/storage_helper.dart';
 import 'widgets/account_widget.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -144,6 +146,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       },
                     );
                     if (confirmed == true) {
+                      await sl<StorageHelper>().deleteToken();
                       GoRouter.of(context).goNamed(AppRoutes.loginScreen);
                     }
                   },

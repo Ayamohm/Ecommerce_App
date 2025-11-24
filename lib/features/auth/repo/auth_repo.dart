@@ -5,6 +5,8 @@ import 'package:commerce_app/features/auth/model/login_response_model.dart';
 import 'package:dartz/dartz.dart';
 
 import '../../../core/networking/dio_endpoints.dart';
+import '../../../core/utils/service_locators.dart';
+import '../../../core/utils/storage_helper.dart';
 
 class Authrepo {
 
@@ -23,12 +25,17 @@ class Authrepo {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      final model = LoginResponseModel.fromJson(
-        response.data,
-      );
-      return Right(model);
-    } else {
+      LoginResponseModel loginResponseModel= LoginResponseModel.fromJson(response.data,);
+
+      if(loginResponseModel.token!=null){
+        await sl<StorageHelper>().saveToken(loginResponseModel.token!);
+        return Right(loginResponseModel);
+      }else{
+        return Left(response.data.toString());
+      }
+    }else {
       return Left(response.data.toString());
     }
   }
+
 }

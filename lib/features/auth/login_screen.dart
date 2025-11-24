@@ -14,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/styles/app_styles.dart';
 import '../../core/utils/service_locators.dart';
+import '../../core/utils/storage_helper.dart';
 import '../../core/widgets/spacing_widgets.dart';
 import 'BLOC/auth_bloc.dart';
 import 'BLOC/auth_event.dart';
@@ -47,6 +48,12 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     emailcontroller.addListener(() => setState(() {}));
     passwordcontroller.addListener(() => setState(() {}));
+
+    sl<StorageHelper>().getToken().then((value) {
+      if(value!=null && value.isNotEmpty){
+        GoRouter.of(context).goNamed(AppRoutes.mainScreen);
+      }
+    });
   }
 
   @override
@@ -56,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: BlocProvider(
-          create: (_) => AuthBloc(Authrepo: sl<Authrepo>()),
+          create: (_) => AuthBloc(authRepo: sl<Authrepo>()),
           child: BlocConsumer<AuthBloc,AuthState>(
             listener: (context, state) {
               if(state is AuthError){
